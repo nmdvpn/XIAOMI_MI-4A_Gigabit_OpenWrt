@@ -49,7 +49,12 @@ jobs:
       run: |
         wget -O packages.txt https://github.com/minax007/packages/raw/main/external-package-urls.txt
         cat packages.txt | xargs wget -P /mnt/workdir/openwrt-imagebuilder-${{ env.VERSION }}-${{ env.BOARD }}-${{ env.SUBTARGET }}.Linux-x86_64/packages    
-    
+     
+    - name: Include Openclash Packages
+      run: |
+        git clone --depth 1 --branch master https://github.com/vernesong/OpenClash.git
+        mv OpenClash/luci-app-openclash /mnt/workdir/openwrt-imagebuilder-${{ env.VERSION }}-${{ env.BOARD }}-${{ env.SUBTARGET }}.Linux-x86_64/packages
+        
     - name: Build the image of type 1
       id: type1
       run: |
